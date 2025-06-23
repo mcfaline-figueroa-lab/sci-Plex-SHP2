@@ -9,6 +9,6 @@ The data presented in our manuscript are derived from 2 single-cell screens. All
 
 | Name        | Experiment           |GEO Accession  | Analysis Scripts |
 | :-------------: |:-----------:| :----:| :---:|
-| sci-Plex-SHP2-preliminary | Preliminary SHP2 Screen | GSM______[] | preliminary_screen_analysis |
-| sci-Plex-SHP2-followup | SHP2 Q510 Screen | GSM______[] | Q510_screen_analysis |
+| sci-Plex-SHP2-preliminary | Preliminary SHP2 Screen | [GSM______]() | preliminary_screen_analysis |
+| sci-Plex-SHP2-followup | SHP2 Q510 Screen | [GSM______]() | Q510_screen_analysis |
 
