@@ -1,0 +1,86 @@
+# Parse hashes after sci-RNA-seq demultiplexing and combine with pre-hash CDS
+# To be run after sci-RNA-seq demultiplexing steps completed (cds_precell_prehash.RDS is created)
+
+cd <path to working directory>
+
+WORKING_DIR=`pwd`
+cd $WORKING_DIR
+
+SCRIPTS_DIR=
+DATAMASH_PATH=
+REF_DIR=
+
+### Note on hashing
+# For hashing you will need a hash sample sheet made of a tab delimited file where the first 
+# column is a string describing the treatment conditions for a hashed well, the second
+# column is the hash barcode and the third column is a numeric that denotes the number
+# of labeling axes per well. If you use 1 oligo per well set to 1.
+# CAUTION: Making hash sample sheet in excel might add unnecessary spaces
+# e.g. Neratinib_10000nM_10A01	ACGGTCATCA	1
+#      Neratinib_5000nM_10B01	ACGTAGCAGG	1
+
+HASH_BARCODES_FILE="sci-Plex-SHP2-preliminary-hashSampleSheet.txt"
+
+### Update file name to whatever makes sense (to match corresponding sample name from sci-RNA-seq demultiplexing)
+SAMPLE_NAME="sciPlex"
+
+BATCH_SIZE=10
+
+mkdir $WORKING_DIR/batch-logs/hash
+
+#-------------------------------------------------------------------------------
+# Parse hash barcodes
+#-------------------------------------------------------------------------------
+
+cd $WORKING_DIR
+
+mkdir hash
+mkdir hash/hashed-fastq
+
+ls 3-trimmed-fastq-shortdT/file-lists-for-trimming | while read BATCH; do
+    sbatch $SCRIPTS_DIR/parse_hash.sh \
+        $WORKING_DIR/2-combined-fastq-shortdT                            \
+        $WORKING_DIR/3-trimmed-fastq-shortdT/file-lists-for-trimming/$BATCH             \
+        $SCRIPTS_DIR/                                           \
+        $HASH_BARCODES_FILE                                     \
+        $WORKING_DIR/combinatorial.indexing.key                 \
+        $WORKING_DIR/hash/hashed-fastq
+done
+
+
+#-------------------------------------------------------------------------------
+# Finish parse hash barcodes
+#-------------------------------------------------------------------------------
+cd $WORKING_DIR
+mkdir $WORKING_DIR/hash/hash-final
+
+zcat hash/hashed-fastq/*.gz \
+    | $DATAMASH_PATH -g 2,3,4 count 3 \
+    | $DATAMASH_PATH -g 1 sum 4 \
+    | awk -v S=$SAMPLE_NAME '{OFS="\t";} {print S, $0}' \
+    > $WORKING_DIR/hash/hash-final/hashReads.per.cell
+
+
+zcat hash/hashed-fastq/*.gz \
+    | uniq \
+    | $DATAMASH_PATH -g 2,3,4 count 3 \
+    | $DATAMASH_PATH -g 1 sum 4 \
+    | awk -v S=$SAMPLE_NAME '{OFS="\t";} {print S, $0}' \
+    > $WORKING_DIR/hash/hash-final/hashUMIs.per.cell
+
+
+zcat hash/hashed-fastq/*.gz \
+    | uniq \
+    | $DATAMASH_PATH -g 1,2,4 count 3  \
+    > $WORKING_DIR/hash/hash-final/hashTable.out 
+
+paste $WORKING_DIR/hash/hash-final/hashUMIs.per.cell  $WORKING_DIR/hash/hash-final/hashReads.per.cell \
+     | cut -f 1,2,6,3 \
+     | awk 'BEGIN {OFS="\t";} {dup = 1-($3/$4); print $1,$2,$3,$4,dup;}' \
+     > $WORKING_DIR/hash/hash-final/hashDupRate.txt
+
+# Some operations to update parse_hash.sh to look into hash stats
+
+cat hash/hash-final/hashDupRate.txt | $DATAMASH_PATH sum 3 # tells you the UMI sum
+cat hash/hash-final/hashDupRate.txt | $DATAMASH_PATH sum 4 # tells you the read sum
+cat hash/hash-final/hashDupRate.txt | $DATAMASH_PATH median 5 # tells you the median duplication rate
