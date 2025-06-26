@@ -5,10 +5,10 @@ the effect on gene expression. The folders in the repository contain analysis sc
 ### Contents
 
 ##### Data and data processing scripts
-The data presented in our manuscript are derived from 2 single-cell screens. All raw and processed files can be found on the National Center for Biotechnology Information Gene Expression Ominibus (NCBI GEO) repository under series GSE____. The pipeline to demultiplex sci-Plex-v2 experiments beginning with .fastq files can be found in the [process\_from_raw](https://github.com/mcfaline-figueroa-lab/sci-Plex-EGFRi/tree/main/process_from_raw) folder of the mcfaline-figueroa-lab/sci-Plex-EGFRi repo.
+The data presented in our manuscript are derived from 2 single-cell screens. All raw and processed files can be found on the National Center for Biotechnology Information Gene Expression Ominibus (NCBI GEO) repository under series GSE300865. The pipeline to demultiplex sci-Plex-v2 experiments beginning with .fastq files can be found in the [process\_from_raw](https://github.com/mcfaline-figueroa-lab/sci-Plex-EGFRi/tree/main/process_from_raw) folder of the mcfaline-figueroa-lab/sci-Plex-EGFRi repo.
 
 | Name        | Experiment           |GEO Accession  | Analysis Scripts |
 | :-------------: |:-----------:| :----:| :---:|
-| sci-Plex-SHP2-preliminary | Preliminary SHP2 Screen | [GSM______]() | preliminary_screen_analysis |
-| sci-Plex-SHP2-followup | SHP2 Q510 Screen | [GSM______]() | Q510_screen_analysis |
+| sci-Plex-SHP2-preliminary | Preliminary SHP2 Screen | [GSM9069862](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9069862) | preliminary_screen_analysis |
+| sci-Plex-SHP2-followup | SHP2 Q510 Screen | [GSM9069863](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9069863) | Q510_screen_analysis |
 
