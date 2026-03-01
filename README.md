@@ -12,3 +12,4 @@ The data presented in our manuscript are derived from 2 single-cell screens. All
 | sci-Plex-SHP2-preliminary | Preliminary SHP2 Screen | [GSM9069862](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9069862) | preliminary_screen_analysis |
 | sci-Plex-SHP2-followup | SHP2 Q510 Screen | [GSM9069863](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9069863) | Q510_screen_analysis |
 
+DOI: 10.5281/zenodo.18825550
