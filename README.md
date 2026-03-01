@@ -1,4 +1,7 @@
 # sci-Plex-SHP2
+
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18825550.svg)](https://doi.org/10.5281/zenodo.18825550)
+
 This repo contains the code used for single-cell RNA-seq analysis in the sci-Plex-SHP2 study in which we examine the relationship between structural perturbations to SHP2 and
 the effect on gene expression. The folders in the repository contain analysis scripts, including files used for preprocessing, analysis, and interpretation. 
 
@@ -12,4 +15,3 @@ The data presented in our manuscript are derived from 2 single-cell screens. All
 | sci-Plex-SHP2-preliminary | Preliminary SHP2 Screen | [GSM9069862](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9069862) | preliminary_screen_analysis |
 | sci-Plex-SHP2-followup | SHP2 Q510 Screen | [GSM9069863](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9069863) | Q510_screen_analysis |
 
-DOI: 10.5281/zenodo.18825550
